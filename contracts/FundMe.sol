@@ -7,7 +7,10 @@ import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 contract FundMe {
     // uint256 public number;
 
-    uint256 public minimumUsd = 50;
+    uint256 public minimumUsd = 50 * 1e18; // 1 * 10 ** 18
+
+    address[] public funders;
+    mapping(address => uint256) public addressToAmountFunded;
 
     function fund() public payable {
         // want to be able to set a minimum fund amount in USD
@@ -19,6 +22,9 @@ contract FundMe {
         // what is reverting?
         // undo any action before, and send the remaining gas back.
         // reverting => number is not set to 5.
+
+        funders.push(msg.sender);
+        addressToAmountFunded[msg.sender] = msg.value;
     }
 
     function getPrice() public view returns(uint256) {

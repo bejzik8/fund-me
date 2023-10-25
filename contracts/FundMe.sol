@@ -43,6 +43,22 @@ contract FundMe {
 
         // reset the array
 
-        // withdraw funds
+        funders = new address[](0);
+
+        // withdraw the funds
+
+        // 1.) transfer
+
+        // typeof msg.sender = address
+        // typeof payable(msg.sender) = payable address
+        payable(msg.sender).transfer(address(this).balance);
+
+        // 2.) send
+        bool sendSuccess = payable(msg.sender).send(address(this).balance);
+        require(sendSuccess, "Send failed!");
+
+        // 3.) call
+        (bool callSuccess, ) = payable(msg.sender).call{ value: address(this).balance }("");
+        require(callSuccess, "Call failed!");
     }
 }

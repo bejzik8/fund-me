@@ -14,6 +14,12 @@ contract FundMe {
     address[] public funders;
     mapping(address => uint256) public addressToAmountFunded;
 
+    address public owner;
+
+    constructor() {
+        owner = msg.sender;
+    }
+
     function fund() public payable {
         // want to be able to set a minimum fund amount in USD
 
@@ -51,11 +57,11 @@ contract FundMe {
 
         // typeof msg.sender = address
         // typeof payable(msg.sender) = payable address
-        payable(msg.sender).transfer(address(this).balance);
+        // payable(msg.sender).transfer(address(this).balance);
 
         // 2.) send
-        bool sendSuccess = payable(msg.sender).send(address(this).balance);
-        require(sendSuccess, "Send failed!");
+        // bool sendSuccess = payable(msg.sender).send(address(this).balance);
+        // require(sendSuccess, "Send failed!");
 
         // 3.) call
         (bool callSuccess, ) = payable(msg.sender).call{ value: address(this).balance }("");

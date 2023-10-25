@@ -19,7 +19,7 @@ contract FundMe {
 
         // number = 5;
 
-        require(msg.value > minimumUsd, "Didn't send enough!"); // 1e18 == 1 * 10 ** 18 == 1.000.000.000.000.000.000
+        require(msg.value.getConversionRate() >= minimumUsd, "Didn't send enough!"); // 1e18 == 1 * 10 ** 18 == 1.000.000.000.000.000.000
 
         // what is reverting?
         // undo any action before, and send the remaining gas back.
